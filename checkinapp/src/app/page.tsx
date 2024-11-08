@@ -1,7 +1,9 @@
-import Image from "next/image";
+import UserList from "./components/UserList";
 
 export default function Home() {
   return (
-    <main></main>
+    <main className="px-6">
+      <UserList />
+    </main>
   );
 }
