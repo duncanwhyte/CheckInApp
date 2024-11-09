@@ -1,45 +1,40 @@
 "use client"
-import { useState, useEffect } from "react"
-import { useParams } from "next/navigation"
+import {useRouter} from "next/navigation"
+import { useState ,useEffect } from "react"
 import supabaseClient from "@/app/utils/createSupabaseClient"
-import type { User } from "../UserList/types"
 import UserCard from "../UserCard"
 import CtaButton from "../CtaButton"
-export default function CheckInSection() {
-    const {userId} = useParams();
+import type { User } from "../UserList/types"
+export default function CheckInSection({data} : {data: User}) {
     const supabase = supabaseClient();
-    const [user, setUser] = useState<User | null>(null)
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(false)
-    const handleUserArrival = (arrival: boolean) => {
-        supabase.from("users").update({present: arrival}).eq("id", userId).select();
-        setUser((prevState) => {
-            return {
-                ...prevState,
-                present: arrival
-            }
-        })
+    const [user, setUser] = useState(data)
+    const router = useRouter();
+    const handleUserAttendance = async (arrival: boolean) => {
+        if (user.present === arrival) {
+            return
+        }
+        await supabase.from("users").update({"present": `${arrival}`}).eq("id", data.id).select();
+        router.push("/")
     }
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                setIsLoading(true);
-                const {data, error} = await supabase.from("users").update({"present": true}).eq("id", userId).select();
-                setUser(data[0])
-                setIsLoading(false)
-            } catch (error) {
-                setError(true);
-            }
+        const userChannel = supabase.channel("user-channel").on("postgres_changes", {
+            event: "UPDATE",
+            schema: "public",
+            table: "users"
+        }, (payload) => {
+            setUser(payload.new as User)
+        }).subscribe()
+        return () => {
+            supabase.removeChannel(userChannel)
         }
-        fetchUser();
-    }, [])
+    },  [data, user, setUser])
     return (
         <div>
-            {!isLoading && user && <UserCard id={user.id} name={user.name} avatar={user.avatar} jobTitle={user.jobTitle} present={user.present} />}
-                <div className="">
-                    <CtaButton arrival={true} callback={handleUserArrival} buttonName={"Arrive"}/>
-                    <CtaButton arrival={false} callback={handleUserArrival} buttonName={"Depart"} />
-                </div>
+            {user && <UserCard id={user.id} name={user.name} avatar={user.avatar} jobTitle={user.jobTitle} present={user.present} />}
+                <>
+                    <CtaButton arrival={true} handleUserAttendance={handleUserAttendance} buttonName={"Arrive"}/>
+                    <CtaButton arrival={false} handleUserAttendance={handleUserAttendance} buttonName={"Depart"} />
+                </>
         </div>
     )
 }

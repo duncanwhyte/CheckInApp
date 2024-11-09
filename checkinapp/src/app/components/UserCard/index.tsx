@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image"
+import {useEffect, useState} from "react"
 import Badge from "../Badge"
 import type { User } from "../UserList/types"
 export default function UserCard({id ,name, avatar, jobTitle, present} : User) {
