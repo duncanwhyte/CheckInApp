@@ -4,28 +4,19 @@ import UserCard from "../UserCard"
 import type { User } from "./types";
 import supabaseClient from "@/app/utils/createSupabaseClient";
 
-export default function UserList() {
+export default function UserList({data}) {
     const supabase = supabaseClient();
-    const [users, setUsers] = useState<User[] | null>(null)
+    const [users, setUsers] = useState<User[] | []>(data)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(false)
-    
-        useEffect(() => {
-      const fetchUsers = async () => {
-        try {
-          setIsLoading(true);
-          const {data, error} = await supabase.from("users").select();
-          setUsers(data)
-          setIsLoading(false)
-        } catch (error) {
-          setIsLoading(false)
-        }
-      }
-      fetchUsers()
+    useEffect(() => {
+      supabase.channel("realtime users").on("postgres_changes", {event: "UPDATE", schema: "public", table: "users"}, (payload) => {
+        console.log(payload)
+      }).subscribe()
     }, [])
     return (
         <ul className="flex flex-col items-center">
-            {!isLoading && users && users.map(({id, name, avatar, jobTitle, present}) => <UserCard key={id} name={name} avatar={avatar} jobTitle={jobTitle} present={present} />)}
+            {!isLoading && users && users.map(({id, name, avatar, jobTitle, present}) => <li key={id}>{<UserCard id={id} name={name} avatar={avatar} jobTitle={jobTitle} present={present} />}</li>)}
         </ul>
     )
 }
