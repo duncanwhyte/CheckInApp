@@ -4,8 +4,7 @@ import Badge from "../Badge"
 import type { User } from "../UserList/types"
 export default function UserCard({id ,name, avatar, jobTitle, present} : User) {
     return (
-        <li className="min-w-[350px] mb-4 rounded-lg">
-            <div className="border border-solid border-black px-4 py-2 rounded-xl">
+            <div className="min-w-[350px] mb-4 border border-solid border-black px-4 py-2 rounded-xl">
                 <div className="flex justify-between">
                 <div className="flex">
                     <div>
@@ -21,7 +20,6 @@ export default function UserCard({id ,name, avatar, jobTitle, present} : User) {
                 </div>
                 </div>
             </div>
-        </li>
     )
     
 }
