@@ -2,7 +2,7 @@
 import Image from "next/image"
 import {useEffect, useState} from "react"
 import Badge from "../Badge"
-import type { User } from "../UserList/types"
+import type { User } from "../../types/types"
 export default function UserCard({id ,name, avatar, jobTitle, present} : User) {
     return (
             <div className="min-w-[350px] mb-4 border border-solid border-black px-4 py-2 rounded-xl">
