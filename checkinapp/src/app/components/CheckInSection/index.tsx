@@ -4,7 +4,7 @@ import { useState ,useEffect } from "react"
 import supabaseClient from "@/app/utils/createSupabaseClient"
 import UserCard from "../UserCard"
 import CtaButton from "../CtaButton"
-import type { User } from "../UserList/types"
+import type { User } from "../../types/types"
 export default function CheckInSection({data} : {data: User}) {
     const supabase = supabaseClient();
     const [user, setUser] = useState(data)
