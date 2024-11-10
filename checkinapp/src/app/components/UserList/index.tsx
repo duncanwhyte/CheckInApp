@@ -3,12 +3,12 @@ import { useState, useEffect, useContext } from "react";
 import UserCard from "../UserCard"
 import type { User } from "../../types/types";
 import { useRouter } from "next/navigation";
-import { StateContext } from "@/app/context/context";
+import { SupabaseContext } from "@/app/context/context";
 import UserForm from "../UserForm";
 import NewUserButton from "../NewUserButton";
 
 export default function UserList({data}: {data : User[]}) {
-    const {supabase} = useContext(StateContext)
+    const {supabase} = useContext(SupabaseContext)
     const [showForm, setShowForm] = useState(false)
     const router = useRouter()
     const [users, setUsers] = useState<User[] | []>(data)
@@ -27,12 +27,17 @@ export default function UserList({data}: {data : User[]}) {
       }
     }, [supabase])
     return (
-      <div className="relative">
-        <NewUserButton handleShowForm={handleShowForm} />
+      <>
         <UserForm showForm={showForm} handleShowForm={handleShowForm} />
-        <ul className="flex flex-col items-center">
+      <div className="relative flex items-center justify-around">
+        <>
+        <NewUserButton handleShowForm={handleShowForm} />
+        </>
+        <ul>
             {users?.map(({id, name, avatar, jobTitle, present}) => <li onClick={() => navigateToCheckIn(id)} key={id}>{<UserCard id={id} name={name} avatar={avatar} jobTitle={jobTitle} present={present} />}</li>)}
         </ul>
         </div>
+      </>
+
     )
 }

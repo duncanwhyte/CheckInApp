@@ -1,11 +1,12 @@
 "use client"
-import { useState } from "react";
-import { defaultState, StateContext } from "@/app/context/context";
+import { SupabaseContext } from "@/app/context/context";
+import supabaseClient from "@/app/utils/createSupabaseClient";
+
 export default function ContextProvider({children}: {children: React.ReactNode}) {
-    const [stateData, setStateData] = useState(defaultState)
+    const supabase = supabaseClient()
       return (
-        <StateContext.Provider value={defaultState}>
+        <SupabaseContext.Provider value={{supabase}}>
             {children}
-        </StateContext.Provider>
+        </SupabaseContext.Provider>
       )
 }

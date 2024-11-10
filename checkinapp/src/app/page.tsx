@@ -1,9 +1,8 @@
 import ContextProvider from "./context/ContextProvider";
-import UserForm from "./components/UserForm";
 import UserList from "./components/UserList";
 import supabaseClient from "./utils/createSupabaseClient";
 
-export default async function Home() {
+export default async function UsersPage() {
   const supabase = supabaseClient();
   const {data: users} = await supabase.from("users").select();
   return (
