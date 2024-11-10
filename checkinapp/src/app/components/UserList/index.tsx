@@ -25,7 +25,7 @@ export default function UserList({data}: {data : User[]}) {
       return () => {
         supabase.removeChannel(realtimeUsers)
       }
-    }, [supabase, users])
+    }, [supabase, users, setUsers])
     return (
       <>
         <UserForm showForm={showForm} handleShowForm={handleShowForm} />
