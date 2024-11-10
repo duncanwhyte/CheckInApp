@@ -1,13 +1,13 @@
 "use client"
 import { useContext, useState } from "react"
 import { faker } from "@faker-js/faker";
-import { StateContext } from "@/app/context/context";
+import { SupabaseContext } from "@/app/context/context";
 export default function UserForm({showForm, handleShowForm} : {showForm: boolean, handleShowForm: () => void}) {
     const [userData, setUserData] = useState({
         name: "",
         jobTitle: "",
     })
-    const {supabase} = useContext(StateContext)
+    const {supabase} = useContext(SupabaseContext)
     const handleUserSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const {name, jobTitle} = userData

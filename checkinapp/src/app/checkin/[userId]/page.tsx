@@ -1,6 +1,6 @@
 import CheckInSection from "@/app/components/CheckInSection";
 import supabaseClient from "@/app/utils/createSupabaseClient";
-export default async function CheckinPage({params}) {
+export default async function CheckinPage({params} : {params: Promise<{userId: number}>}) {
     const userId = (await params).userId
     const supabase = supabaseClient();
     const {data: user} = await supabase.from("users").select().eq("id", userId)

@@ -2,7 +2,7 @@ import { createContext } from "react";
 import supabaseClient from "../utils/createSupabaseClient";
 
 const supabase = supabaseClient()
-export const defaultState = {
+export const defaultSupabase = {
     supabase,
 }
-export const StateContext = createContext(defaultState)
+export const SupabaseContext = createContext(defaultSupabase)

@@ -3,12 +3,12 @@ import { useState, useEffect, useContext } from "react";
 import UserCard from "../UserCard"
 import type { User } from "../../types/types";
 import { useRouter } from "next/navigation";
-import { StateContext } from "@/app/context/context";
+import { SupabaseContext } from "@/app/context/context";
 import UserForm from "../UserForm";
 import NewUserButton from "../NewUserButton";
 
 export default function UserList({data}: {data : User[]}) {
-    const {supabase} = useContext(StateContext)
+    const {supabase} = useContext(SupabaseContext)
     const [showForm, setShowForm] = useState(false)
     const router = useRouter()
     const [users, setUsers] = useState<User[] | []>(data)
