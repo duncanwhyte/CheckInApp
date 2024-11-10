@@ -27,7 +27,7 @@ export default function CheckInSection({data} : {data: User}) {
     }
     useEffect(() => {
         const userChannel = supabase.channel("user-channel").on("postgres_changes", {
-            event: "UPDATE",
+            event: "*",
             schema: "public",
             table: "users"
         }, (payload) => {
