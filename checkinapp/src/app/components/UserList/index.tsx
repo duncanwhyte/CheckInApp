@@ -34,7 +34,7 @@ export default function UserList({data}: {data : User[]}) {
         <NewUserButton handleShowForm={handleShowForm} />
         </>
         <ul>
-            {users?.map(({id, name, avatar, jobTitle, present}) => <li onClick={() => navigateToCheckIn(id)} key={id}>{<UserCard id={id} name={name} avatar={avatar} jobTitle={jobTitle} present={present} />}</li>)}
+            {users?.map(({id, name, avatar, jobTitle, present}) => <li onClick={() => navigateToCheckIn(id)} key={id}>{<UserCard name={name} avatar={avatar} jobTitle={jobTitle} present={present} />}</li>)}
         </ul>
         </div>
       </>
