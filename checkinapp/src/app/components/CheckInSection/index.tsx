@@ -40,9 +40,7 @@ export default function CheckInSection({data} : {data: User}) {
     return (
         <div className="flex flex-col items-center">
             <BackToUsersButton handleUserPageNavigation={handleUserPageNavigation} />
-
         {!error && user ? <UserCard name={user.name} avatar={user.avatar} jobTitle={user.jobTitle} present={user.present} /> : <h2>Error has Occurred</h2>}
-            
                 <div className="flex justify-center items-center">
                     <CtaButton arrival={true} handleUserAttendance={handleUserAttendance} buttonName={"Arrive"}/>
                     <CtaButton arrival={false} handleUserAttendance={handleUserAttendance} buttonName={"Depart"} />

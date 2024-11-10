@@ -41,7 +41,7 @@ export default function UserForm({showForm, handleShowForm} : {showForm: boolean
         })
     }
     return (
-        <form className={`flex flex-col items-center bg-[#005CBE] px-5 py-3 rounded-xl max-w-[70%] transition-all left-1/2 -translate-x-1/2 absolute ${showForm ? "-translate-y-0" : "-translate-y-96"}`} onSubmit={handleUserSubmit}>
+        <form className={`flex flex-col items-center z-10 bg-[#005CBE] px-5 py-3 rounded-xl max-w-[70%] transition-all left-1/2 -translate-x-1/2 absolute ${showForm ? "-translate-y-0" : "-translate-y-96"}`} onSubmit={handleUserSubmit}>
             <h2 className="text-2xl mb-3 text-white self-start">Check In</h2>
             <div className="mb-3">
             <label className="block text-white" htmlFor="name">Name</label>
